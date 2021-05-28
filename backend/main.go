@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"vahidid/20-project-go/Config"
+	"vahidid/20-project-go/Models"
+	"vahidid/20-project-go/Routes"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -18,5 +20,10 @@ func main() {
 		fmt.Println("status: ", err)
 	}
 
-	fmt.Println("Hi There")
+	// defer Config.DB.Close()
+	Config.DB.AutoMigrate(&Models.Task{})
+
+	r := Routes.SetupRouter()
+
+	r.Run("0.0.0.0:5000")
 }
